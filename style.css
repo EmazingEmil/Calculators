@@ -1,0 +1,211 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #e3f2fd;
+    color: #212121;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+header {
+    background-color: #1e88e5;
+    color: white;
+    padding: 1.5rem 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+header nav {
+    display: flex;
+    gap: 1rem;
+}
+
+header nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+header nav a:hover {
+    background-color: #ffcc80;
+    color: #212121;
+}
+
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    flex: 1;
+}
+
+section {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+section.main-menu {
+    padding-right: 2.5rem;
+}
+
+section.main-menu::after {
+    content: '\f061';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #1e88e5;
+    transition: color 0.2s;
+}
+
+section.main-menu:hover::after {
+    color: #1565c0;
+}
+
+section:not(.main-menu) {
+    padding-right: 0;
+}
+
+section:not(.main-menu)::after {
+    content: none;
+}
+
+section#fire-calculator {
+    border-color: #e57373;
+}
+
+section#fire-calculator:hover {
+    box-shadow: 0 8px 15px rgba(227, 74, 74, 0.2);
+}
+
+section#earth-calculator {
+    border-color: #81c784;
+}
+
+section#earth-calculator:hover {
+    box-shadow: 0 8px 15px rgba(129, 199, 132, 0.2);
+}
+
+section#air-calculator {
+    border-color: #d4c117;
+}
+
+section#air-calculator:hover {
+    box-shadow: 0 8px 15px rgba(212, 193, 23, 0.2);
+}
+
+section#water-calculator {
+    border-color: #64b5f6;
+}
+
+section#water-calculator:hover {
+    box-shadow: 0 8px 15px rgba(100, 181, 246, 0.2);
+}
+
+section h2 {
+    margin-top: 0;
+    color: #1e88e5;
+    font-size: 1.5rem;
+}
+
+section a {
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+section#fire-calculator a {
+    color: #e57373;
+}
+
+section#fire-calculator:hover a {
+    color: #d32f2f;
+}
+
+section#earth-calculator a {
+    color: #81c784;
+}
+
+section#earth-calculator:hover a {
+    color: #388e3c;
+}
+
+section#air-calculator a {
+    color: #d4c117;
+}
+
+section#air-calculator:hover a {
+    color: #fbc02d;
+}
+
+section#water-calculator a {
+    color: #64b5f6;
+}
+
+section#water-calculator:hover a {
+    color: #1976d2;
+}
+
+input {
+    width: calc(100% - 2rem);
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #1565c0;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #212121;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+}

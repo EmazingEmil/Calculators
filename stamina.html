@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stamina Regeneration Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Stamina Regeneration Calculator</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Calculate Stamina Regeneration</h2>
+            <input type="number" id="stamina-input" placeholder="Enter stamina value">
+            <button onclick="calculateStamina()">Calculate</button>
+            <p id="stamina-result">Regenerated stamina per second: --</p>
+            <p id="stamina-sitting-result">Regeneration while sitting per second: --</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Elemental Conquest</p>
+    </footer>
+    <script>
+        function calculateStamina() {
+            const stamina = parseFloat(document.getElementById('stamina-input').value);
+            if (isNaN(stamina) || stamina < 0) {
+                document.getElementById('stamina-result').textContent = 'Please enter a valid stamina value.';
+                document.getElementById('stamina-sitting-result').textContent = '';
+                return;
+            }
+            const result = stamina === 0 ? 0.5 : 0.5 + 0.445 + (stamina - 1) * 0.0175;
+            const sittingResult = result * 2;
+            document.getElementById('stamina-result').textContent = `Regenerated stamina per second: ${result.toFixed(2)}`;
+            document.getElementById('stamina-sitting-result').textContent = `Regeneration while sitting per second: ${sittingResult.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
