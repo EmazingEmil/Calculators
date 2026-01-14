@@ -8,78 +8,10 @@
 </head>
 <body>
     <header>
-        <h1>Flame Damage Calculator</h1>
+        <h1>Coming soon...</h1>
     </header>
-    <main>
-        <section>
-            <h2>Flame Damage Calculator</h2>
-            <label for="strength-input">Enter Strength:</label>
-            <input type="number" id="strength-input" placeholder="Enter strength value">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ability</th>
-                        <th>Damage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Fireball</td>
-                        <td><span id="fireball-damage">--</span></td>
-                    </tr>
-                    <tr>
-                        <td>Fly Kick</td>
-                        <td><span id="flykick-damage">--</span></td>
-                    </tr>
-                    <tr>
-                        <td>Swing Kick</td>
-                        <td><span id="swingkick-damage">--</span></td>
-                    </tr>
-                    <tr>
-                        <td>Fire Breath</td>
-                        <td><span id="firebreath-damage">--</span></td>
-                    </tr>
-                    <tr>
-                        <td>Fire Shield</td>
-                        <td><span id="fireshield-damage">--</span></td>
-                    </tr>
-                    <tr>
-                        <td>Fire Fly</td>
-                        <td><span id="firefly-damage">--</span></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Total Damage</strong></td>
-                        <td><strong><span id="total-damage">--</span></strong></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button onclick="calculateFlameDamage()">Calculate</button>
-        </section>
-    </main>
     <footer>
         <p>&copy; 2025 Elemental Conquest</p>
     </footer>
-    <script>
-        function calculateFlameDamage() {
-            const strength = parseFloat(document.getElementById('strength-input').value);
-            if (isNaN(strength) || strength < 0) {
-                alert('Please enter a valid strength value.');
-                return;
-            }
-
-            const fireballDamage = Math.round(strength * 1.5);
-
-            document.getElementById('fireball-damage').textContent = fireballDamage.toFixed(2);
-
-            document.getElementById('flykick-damage').textContent = '--';
-            document.getElementById('swingkick-damage').textContent = '--';
-            document.getElementById('firebreath-damage').textContent = '--';
-            document.getElementById('fireshield-damage').textContent = '--';
-            document.getElementById('firefly-damage').textContent = '--';
-
-            const totalDamage = fireballDamage;
-            document.getElementById('total-damage').textContent = totalDamage.toFixed(2);
-        }
-    </script>
 </body>
 </html>
