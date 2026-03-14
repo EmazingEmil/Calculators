@@ -1311,7 +1311,7 @@
       h += `</div><div class="st frost">Ice Moves</div><div class="mg">`;
       h += mc('frost', 'Ice Spikes (furthest)', r.iceSpikes, 'dmg');
       h += mc('frost', 'Freeze', r.freeze, 'dmg', WSZ.freeze);
-      h += mc('frost', 'Frost Barrage / shot', r.frostBarrage, 'dmg', WSZ.frostBarrage);
+      h += mc('frost', 'Barrage / shot', r.frostBarrage, 'dmg', WSZ.frostBarrage);
       h += mc('frost', 'Freeze Stun Duration', r.freezeStun, 'seconds');
       h += mc('frost', 'Barrage Dmg Absorbed', r.barrageAbsorb, 'absorbed');
       h += mc('frost', 'Barrage Time', r.barrageTime, 'seconds');
@@ -1328,8 +1328,22 @@
       h += '</div>';
       document.getElementById('w-out').innerHTML = h;
     }
-    function setWTOD(t) { wDay = t === 'day'; document.getElementById('wt-day').className = 'tog' + (wDay ? ' on-water' : ''); document.getElementById('wt-night').className = 'tog' + (wDay ? '' : ' on-frost'); updateWater() }
-    function toggleMoon() { wMoon = !wMoon; document.getElementById('wt-moon').className = 'tog' + (wMoon ? ' on-moon' : ''); updateWater() }
+    function setWTOD(t) {
+      if (t === 'day' && wMoon) {
+        wMoon = false;
+        document.getElementById('wt-moon').className = 'tog';
+      }
+      wDay = t === 'day';
+      document.getElementById('wt-day').className = 'tog' + (wDay ? ' on-water' : '');
+      document.getElementById('wt-night').className = 'tog' + (wDay ? '' : ' on-frost');
+      updateWater();
+    }
+    function toggleMoon() {
+      wMoon = !wMoon;
+      document.getElementById('wt-moon').className = 'tog' + (wMoon ? ' on-moon' : '');
+      if (wMoon) setWTOD('night');
+      else updateWater();
+    }
 
     /* FIRE */
     function fireDmg(arr, s, day, roar) { const i = day ? (roar ? 4 : 0) : (roar ? 6 : 2); const b = arr[i], mx = arr[i + 1]; return b + s * (mx - b) / 400 }
@@ -1376,9 +1390,23 @@
       h += '</div>';
       document.getElementById('f-out').innerHTML = h;
     }
-    function setFTOD(t) { fDay = t === 'day'; document.getElementById('ft-day').className = 'tog' + (fDay ? ' on-fire' : ''); document.getElementById('ft-night').className = 'tog' + (fDay ? '' : ' on-thunder'); updateFire() }
+    function setFTOD(t) {
+      if (t === 'night' && fComet) {
+        fComet = false;
+        document.getElementById('ft-comet').className = 'tog';
+      }
+      fDay = t === 'day';
+      document.getElementById('ft-day').className = 'tog' + (fDay ? ' on-fire' : '');
+      document.getElementById('ft-night').className = 'tog' + (fDay ? '' : ' on-thunder');
+      updateFire();
+    }
     function toggleRoar() { fRoar = !fRoar; document.getElementById('ft-roar').className = 'tog' + (fRoar ? ' on-roar' : ''); updateFire() }
-    function toggleComet() { fComet = !fComet; document.getElementById('ft-comet').className = 'tog' + (fComet ? ' on-comet' : ''); updateFire() }
+    function toggleComet() {
+      fComet = !fComet;
+      document.getElementById('ft-comet').className = 'tog' + (fComet ? ' on-comet' : '');
+      if (fComet) setFTOD('day');
+      else updateFire();
+    }
 
     /* AIR */
     function calcA(s) {
@@ -1453,11 +1481,11 @@
       h += `</div><div class="st steel">Metal</div><div class="mg">`;
       h += ec('steel', 'Plate Shot / shot', r.plateShot, 'dmg', ESZ.plateShot);
       h += ec('steel', 'Double Plate Shot', r.doublePlate, 'dmg', ESZ.doublePlate);
-      h += ec('steel', 'Steel Armor', r.steelArmor, 'absorbed', ESZ.steelArmor);
+      h += ec('steel', 'Metal Armor', r.steelArmor, 'absorbed', ESZ.steelArmor);
       h += `</div><div class="st dust">Sand</div><div class="mg">`;
       h += ec('dust', 'Sand Slash', r.dustSlash, 'dmg', ESZ.dustSlash);
       h += ec('dust', 'Sand Storm', r.dustStorm, 'dmg', ESZ.dustStorm);
-      h += `<div class="mc dust na"><div class="mname">Dust Barrier</div><div class="mval">All direct (non-AOE)</div></div>`;
+      h += `<div class="mc dust na"><div class="mname">Sand Barrier</div><div class="mval">All direct (non-AOE)</div></div>`;
       h += '</div>';
       document.getElementById('e-out').innerHTML = h;
     }
@@ -1524,7 +1552,7 @@
     /* REFERENCE TABLES */
     function buildRefs() {
       // Water
-      document.getElementById('ref-wtb').innerHTML = Object.entries(WN).map(([k, d]) => `<tr><td>${k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</td><td><span class="mono">${d.b}</span></td><td><span class="mono">${d.m}</span></td><td style="color:${d.t === 'Yes' ? 'var(--plant)' : 'var(--text-muted)'}">${d.t}</td><td class="nc">${d.n || '—'}</td></tr>`).join('');
+      document.getElementById('ref-wtb').innerHTML = Object.entries(WN).map(([k, d]) => `<tr><td>${k === 'frostBarrage' ? 'Barrage' : k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase())}</td><td><span class="mono">${d.b}</span></td><td><span class="mono">${d.m}</span></td><td style="color:${d.t === 'Yes' ? 'var(--plant)' : 'var(--text-muted)'}">${d.t}</td><td class="nc">${d.n || '—'}</td></tr>`).join('');
       // Fire
       const frows = [
         ['Fireball / hitbox', 1, 10.99, 1, 9.9, '10 hitboxes total. Dual Swords speeds it up.'],
@@ -1565,10 +1593,10 @@
         ['Lava Pool / tick', 5, 27, 999, 'No', 'spdmg = 16 (hardcoded in sheet)'],
         ['Plate Shot / shot', 12, 71.99, 0, 'Yes', 'Can blind/trip. Both shots in calc.'],
         ['Double Plate Shot', 14, 133.99, 0, 'Yes', 'Can blind/trip.'],
-        ['Steel Armor', 25, 425, 400, 'No', 'No HP regen while active.'],
+        ['Metal Armor', 25, 425, 400, 'No', 'No HP regen while active.'],
         ['Sand Slash', 20, 120, 0, 'No', ''],
         ['Sand Storm', 20, 120, 0, 'Yes', ''],
-        ['Dust Barrier', '—', 'All direct', '0', 'No', 'Blocks all direct (non-AOE) attacks.'],
+        ['Sand Barrier', '—', 'All direct', '0', 'No', 'Blocks all direct (non-AOE) attacks.'],
       ];
       document.getElementById('ref-etb').innerHTML = erows.map(([n, b, m, sz, tr, nt]) => `<tr><td>${n}</td><td><span class="mono">${b}</span></td><td><span class="mono">${m}</span></td><td style="color:${sz === 0 || sz === '0' ? 'var(--plant)' : sz >= 400 ? 'var(--stamina)' : 'var(--text-dim)'}">${sz}</td><td style="color:${tr === 'Yes' ? 'var(--plant)' : 'var(--text-muted)'}">${tr}</td><td class="nc">${nt || '—'}</td></tr>`).join('');
       // NE
