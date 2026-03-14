@@ -1179,11 +1179,16 @@
           <input type="number" id="s-num" class="strinput" min="0" max="400" value="0"
             style="color:var(--stamina);--icolor:var(--stamina)" oninput="syncRange('s-num','s-sta');updateStamina()">
         </div>
+        <div class="trow">
+          <div class="tgroup">
+            <button class="tog" id="st-sit" onclick="toggleSitting()">Sitting (2x)</button>
+          </div>
+        </div>
       </div>
-      <div class="note" style="--nc:var(--stamina)"><span><strong>Note:</strong> Value shown is stamina per second while
-          <strong>standing still</strong>. Regen is reduced while walking.</span></div>
+      <div class="note" style="--nc:var(--stamina)"><span><strong>Note:</strong> Value shown is stamina gained per
+          second while standing or walking.</span></div>
       <div class="sbig">
-        <div class="bl">Stamina Gained Per Second (Standing)</div>
+        <div class="bl" id="s-regen-label">Stamina Gained Per Second</div>
         <div class="bn" id="s-regen">0.500</div>
         <div class="bu">stamina / second</div>
       </div>
@@ -1244,7 +1249,7 @@
     /* STATE */
     let wStr = 0, wDay = false, wMoon = false;
     let fStr = 0, fDay = true, fRoar = false, fComet = false;
-    let aStr = 0, eStr = 0, neStr = 0, staVal = 0;
+    let aStr = 0, eStr = 0, neStr = 0, staVal = 0, staSitting = false;
 
     /* SYNC HELPERS */
     function clamp(v) { return Math.max(0, Math.min(400, v)) }
@@ -1488,13 +1493,20 @@
     }
 
     /* STAMINA */
-    function calcS(s) { return 0.5 + s / (4 / 0.07) }
+    function calcS(s, sitting) { return (0.5 + s / (4 / 0.07)) * (sitting ? 2 : 1) }
     function updateStamina() {
       const num = document.getElementById('s-num');
       if (num.classList.contains('invalid')) return;
       staVal = clamp(parseInt(num.value) || 0);
-      document.getElementById('s-regen').textContent = calcS(staVal).toFixed(3);
-      document.getElementById('s200').textContent = `At 200: ${calcS(200).toFixed(3)} / s`;
+      document.getElementById('s-regen').textContent = calcS(staVal, staSitting).toFixed(3);
+      document.getElementById('s200').textContent = `At 200: ${calcS(200, staSitting).toFixed(3)} / s`;
+    }
+    function toggleSitting() {
+      staSitting = !staSitting;
+      const btn = document.getElementById('st-sit');
+      btn.className = 'tog' + (staSitting ? ' on-thunder' : '');
+      document.getElementById('s-regen-label').textContent = staSitting ? 'Stamina Gained Per Second (Sitting)' : 'Stamina Gained Per Second';
+      updateStamina();
     }
 
     /* TABS */
@@ -1570,8 +1582,8 @@
 
     /* INIT */
     updateWater(); updateFire(); updateAir(); updateEarth(); updateNE(); updateStamina(); buildRefs();
-    document.getElementById('s400').textContent = `At 400: ${calcS(400).toFixed(3)} / s`;
-    document.getElementById('s200').textContent = `At 200: ${calcS(200).toFixed(3)} / s`;
+    document.getElementById('s400').textContent = `At 400: ${calcS(400, false).toFixed(3)} / s`;
+    document.getElementById('s200').textContent = `At 200: ${calcS(200, false).toFixed(3)} / s`;
   </script>
 </body>
 
